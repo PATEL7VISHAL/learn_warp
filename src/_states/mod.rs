@@ -4,14 +4,14 @@ pub use std::str::FromStr;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Question {
-    id: QuestionId,
-    title: String,
-    content: String,
-    tags: Option<Vec<String>>,
+    pub id: QuestionId,
+    pub title: String,
+    pub content: String,
+    pub tags: Option<Vec<String>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct QuestionId(String);
+pub struct QuestionId(pub String);
 
 impl Question {
     pub fn new(id: QuestionId, title: String, content: String, tags: Option<Vec<String>>) -> Self {
