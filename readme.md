@@ -1,18 +1,18 @@
 Warp use the Reply trait to response of the request 
-    - This on fn request is require to impl if we want to derive the from request
-        ```rust
-        fn into_response(self) -> warp::reply::Response {
-            Response::new(format!("message: {}", self.msg).into())
-            // Here we can see it's creating the response instance
-            // when may be we want send the response
-            // means ever type which impl the Reply trait can convortable 
-            // into the Response.
-        }```
+- This on fn request is require to impl if we want to derive the from request
+    ```rust
+    fn into_response(self) -> warp::reply::Response {
+        Response::new(format!("message: {}", self.msg).into())
+        // Here we can see it's creating the response instance
+        // when may be we want send the response
+        // means ever type which impl the Reply trait can convortable 
+        // into the Response.
+    }```
 
-    - after the route path we can add the function `.recover(function)` which help 
-    use to handle errors (ouccar in above routes).
-    - There args function in `.recover` take `Rejection` type and we can match our 
-    custom error through Rejection::find<T>(self) -> Option<&T>
+- after the route path we can add the function `.recover(function)` which help 
+use to handle errors (ouccar in above routes).
+- There args function in `.recover` take `Rejection` type and we can match our 
+custom error through Rejection::find<T>(self) -> Option<&T>
 
 
 **CORS (Cross-Origin Resource Sharing)**
