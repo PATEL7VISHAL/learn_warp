@@ -2,7 +2,12 @@
 
 use std::str::FromStr;
 
-use warp::{body::json, hyper::StatusCode, reject::Reject, Filter, Rejection};
+use warp::{
+    body::json,
+    hyper::{Method, StatusCode},
+    reject::Reject,
+    Filter, Rejection,
+};
 pub mod _states;
 use _states::*;
 
@@ -27,6 +32,8 @@ async fn get_questions() -> Result<impl warp::Reply, warp::Rejection> {
 }
 
 async fn return_error(r: Rejection) -> Result<impl warp::Reply, warp::Rejection> {
+    println!("{:?}",r);
+
     if let Some(_) = r.find::<InvalidId>() {
         Ok(warp::reply::with_status(
             "No valid ID presented",
@@ -42,6 +49,12 @@ async fn return_error(r: Rejection) -> Result<impl warp::Reply, warp::Rejection>
 
 #[tokio::main]
 async fn main() {
+    let cors = warp::cors()
+        .allow_any_origin()
+        // .allow_header("not-in-the-request")
+        .allow_header("content-type")
+        .allow_methods(&[ Method::POST, Method::DELETE, Method::GET]);
+
     let get_items = warp::get()
         .and(warp::path("questions"))
         .and(warp::path::end())
@@ -49,7 +62,7 @@ async fn main() {
         .recover(return_error); //NOTE: if any error oucar in above routes then it's called in we
                                 // can handle the errors here
 
-    let routes = get_items;
+    let routes = get_items.with(cors);
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 }

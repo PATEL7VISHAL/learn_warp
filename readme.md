@@ -17,7 +17,7 @@ Warp use the Reply trait to response of the request
     custom error through Rejection::find<T>(self) -> Option<&T>
 
 
-- CORS (Cross-Origin Resource Sharing)
+- *CORS (Cross-Origin Resource Sharing)*
     - Some time we need some restrictions to allow the web site to some area or not
     for other area.
     - So here instead of sending http Put like request we send the prefight request
@@ -27,5 +27,9 @@ Warp use the Reply trait to response of the request
         replies with the allowed methods header then then allowed to send PUT request 
         and get the body data.
 
+    - we wrap he route with the `cors` and then it's send the option request which has
+    deifined the `allowed headers/methods/orign`
 
-
+    - In `CORS` we can check the `Headers`, `Origin`, `Methods` and also specified to 
+    allow. it's throw and error in `Forbidden` return type. 
+    
