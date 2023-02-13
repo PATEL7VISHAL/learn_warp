@@ -14,6 +14,7 @@ use to handle errors (ouccar in above routes).
 - There args function in `.recover` take `Rejection` type and we can match our 
 custom error through Rejection::find<T>(self) -> Option<&T>
 
+----------
 
 **CORS (Cross-Origin Resource Sharing)**
 - Some time we need some restrictions to allow the web site to some area or not
