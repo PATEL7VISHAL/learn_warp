@@ -7,9 +7,7 @@ Warp use the Reply trait to response of the request
             // when may be we want send the response
             // means ever type which impl the Reply trait can convortable 
             // into the Response.
-        }
-
-        ```
+        }```
 
     - after the route path we can add the function `.recover(function)` which help 
     use to handle errors (ouccar in above routes).
@@ -17,7 +15,7 @@ Warp use the Reply trait to response of the request
     custom error through Rejection::find<T>(self) -> Option<&T>
 
 
-- *CORS (Cross-Origin Resource Sharing)*
+**CORS (Cross-Origin Resource Sharing)**
     - Some time we need some restrictions to allow the web site to some area or not
     for other area.
     - So here instead of sending http Put like request we send the prefight request
