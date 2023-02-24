@@ -83,33 +83,44 @@ environment`.
 
 
 --- 
-### Request:
-- GET_QUESTIONS => ```sh curl --location --request GET 'localhost:3030/questions'```
+### Requests:
+- GET_QUESTIONS
+```console 
+curl --location --request GET 'localhost:3030/questions'
+```
 
-- ADD_QUSTION => ```sh 
-                    curl --location --request POST 'localhost:3030/questions' \
-                        --header 'Content-Type: application/json' \
-                        --data-raw '{
-                            "id":"1",
-                            "title": "new title",
-                            "content": "update content"
-                        }'```
+- ADD_QUSTION
+```console
+$ curl --location --request POST 'localhost:3030/questions' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "id":"1",
+        "title": "new title",
+        "content": "update content"
+}'
+```
 
-- UPDATE_QUESTION => ```sh 
-                        curl --location --request PUT 'localhost:3030/questions/2' \
-                            --header 'Content-Type: application/json' \
-                            --data-raw '{
-                              "id": "2",
-                              "title": "update title",
-                              "content": "update content"
-                            }'```
+- UPDATE_QUESTION
+```console
+$ curl --location --request PUT 'localhost:3030/questions/2' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "id": "2",
+      "title": "update title",
+      "content": "update content"
+}'```
 
 
-- DELETE_QUSTION => ```sh curl --location --request DELETE 'localhost:3030/questions/1'```
+- DELETE_QUSTION
+```console
+$ curl --location --request DELETE 'localhost:3030/questions/1'
+```
 
-- Add answer => ```sh
-                    curl --location --request POST 'localhost:3030/answers' \
-                      --header 'Content-Type: application/x-www-form-urlencoded' \
-                      --data-urlencode 'id=2' \
-                      --data-urlencode 'content=First question' \
-                      --data-urlencode 'questionId=2'```
+- Add answer
+```console
+curl --location --request POST 'localhost:3030/answers' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'id=2' \
+  --data-urlencode 'content=First question' \
+  --data-urlencode 'questionId=2'
+```
