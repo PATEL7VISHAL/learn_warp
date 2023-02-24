@@ -91,7 +91,7 @@ curl --location --request GET 'localhost:3030/questions'
 
 - ADD_QUSTION
 ```console
-$ curl --location --request POST 'localhost:3030/questions' \
+curl --location --request POST 'localhost:3030/questions' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "id":"1",
@@ -102,18 +102,19 @@ $ curl --location --request POST 'localhost:3030/questions' \
 
 - UPDATE_QUESTION
 ```console
-$ curl --location --request PUT 'localhost:3030/questions/2' \
+curl --location --request PUT 'localhost:3030/questions/2' \
     --header 'Content-Type: application/json' \
     --data-raw '{
       "id": "2",
       "title": "update title",
       "content": "update content"
-}'```
+}'
+```
 
 
 - DELETE_QUSTION
 ```console
-$ curl --location --request DELETE 'localhost:3030/questions/1'
+curl --location --request DELETE 'localhost:3030/questions/1'
 ```
 
 - Add answer
