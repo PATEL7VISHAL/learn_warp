@@ -3,11 +3,11 @@ use std::collections::HashMap;
 use warp::hyper::StatusCode;
 
 use crate::{
-    MyError,
     _states::{Answer, Store},
 };
 
 pub async fn add_answer(
+    question_id: String,
     store: Store,
     params: HashMap<String, String>,
 ) -> Result<impl warp::Reply, warp::Rejection> {
@@ -16,7 +16,8 @@ pub async fn add_answer(
         //NOTE: IDK why here need clone but move from parm is more efficiant.
         params.get("id").unwrap().clone(),
         params.get("content").unwrap().clone(),
-        params.get("questionId").unwrap().clone(),
+        // params.get("questionId").unwrap().clone(), //NOTE: not need to get from the form
+        question_id,
     );
 
     let is_question_found = store
@@ -33,5 +34,5 @@ pub async fn add_answer(
         return Ok(warp::reply::with_status("Answer Added", StatusCode::OK));
     }
 
-    Err(warp::reject::custom(MyError::QuestionNotFound))
+    Err(warp::reject::custom(handle_errors::Error::QuestionNotFound))
 }

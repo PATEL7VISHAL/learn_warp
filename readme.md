@@ -7,7 +7,8 @@ Warp use the Reply trait to response of the request
         // when may be we want send the response
         // means ever type which impl the Reply trait can convortable 
         // into the Response.
-    }```
+    }
+    ```
 
 - after the route path we can add the function `.recover(function)` which help 
 use to handle errors (ouccar in above routes).
@@ -76,7 +77,7 @@ environment`.
     + __JSON__
     + __DATA-URLENCODE__ => like the key and values assign by `=` and multiple value saperated by the `&` sign.
 
-
+- Rust library project contains `lib.rs` which provide a public interface to an underlying functionality.
 
 
 
@@ -119,9 +120,13 @@ curl --location --request DELETE 'localhost:3030/questions/1'
 
 - Add answer
 ```console
-curl --location --request POST 'localhost:3030/answers' \
-  --header 'Content-Type: application/x-www-form-urlencoded' \
-  --data-urlencode 'id=2' \
-  --data-urlencode 'content=First question' \
-  --data-urlencode 'questionId=2'
+curl --location --request POST 'localhost:3030/questions/1/answers' \
+    --header 'Content-type: application/x-www-form-urlencoded' \
+    --data-urlencode 'id=1' \
+    --data-urlencode 'content="first question content answer' \
+```
+
+- Get answers
+```console
+curl --location --request GET 'localhost:3030/questions/2/answers'
 ```

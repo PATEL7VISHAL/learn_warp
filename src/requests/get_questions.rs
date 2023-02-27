@@ -1,20 +1,20 @@
 use crate::{
-    MyError,
     _states::{Pagination, Question, Store},
 };
 use std::collections::HashMap;
+use handle_errors::Error;
 
 // async fn extract_pagination(params: HashMap<String, String>) -> Result<Pagination, Error> {
-fn _extract_pagination(params: HashMap<String, String>) -> Result<Pagination, MyError> {
+fn _extract_pagination(params: HashMap<String, String>) -> Result<Pagination, Error> {
     if let (Some(value_s), Some(value_e)) = (params.get("start"), params.get("end")) {
         return Ok(Pagination {
-            start: value_s.parse().map_err(MyError::ParseError)?,
-            // start: value_s.parse().map_err(|e| MyError::ParseError(e)).unwrap(),
-            end: value_e.parse().map_err(MyError::ParseError)?,
+            start: value_s.parse().map_err(Error::ParseError)?,
+            // start: value_s.parse().map_err(|e| Error::ParseError(e)).unwrap(),
+            end: value_e.parse().map_err(Error::ParseError)?,
         });
     }
 
-    Err(MyError::MissingParameters)
+    Err(Error::MissingParameters)
 }
 
 pub async fn get_questions(
@@ -43,7 +43,7 @@ pub async fn get_questions(
             || pagination.end >= max_len
             || pagination.start > pagination.end
         {
-            return Err(warp::reject::custom(MyError::QuestionNotFound));
+            return Err(warp::reject::custom(Error::QuestionNotFound));
         }
 
         let res = &res[pagination.start - 1..pagination.end];

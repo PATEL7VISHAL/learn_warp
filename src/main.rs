@@ -16,12 +16,6 @@ use _states::*;
 pub mod requests;
 pub use requests::*;
 
-pub mod my_errors;
-pub use my_errors::MyError;
-
-pub mod utils;
-pub use utils::*;
-
 #[derive(Debug)]
 pub struct InvalidId;
 // pub struct InvalidId{}; //NOTE: What is this differance between above type and this?
@@ -57,7 +51,7 @@ async fn main() {
         .and(warp::path::end())
         .and(store_filter.clone())
         .and(warp::body::json())
-        .and_then(add_question:: add_question);
+        .and_then(add_question::add_question);
     // .recover(return_error); //NOTE: make it one common error handeler
 
     let update_question = warp::put()
@@ -76,19 +70,35 @@ async fn main() {
         .and_then(delete_question::delete_question);
 
     let add_answer = warp::post()
+        .and(warp::path("questions"))
+        .and(warp::path::param::<String>())
         .and(warp::path("answers"))
         .and(warp::path::end())
         .and(store_filter.clone())
         .and(warp::body::form())
         .and_then(add_answer::add_answer);
 
+    let get_answer = warp::get()
+        .and(warp::path("questions"))
+        .and(warp::path::param::<String>())
+        .and(warp::path("answers"))
+        .and(warp::path::end())
+        .and(store_filter.clone())
+        .and_then(get_answer::get_answer);
+
+    //BUG: add_answer and get_answer fliter has some bugs
+    // Bug ouccar when we are added answer of perticular question only avaible till
+    // we don't change the question_id we we add answer in differnt id the the old
+    // answers of differnt question_id become empty.
+
     let routes = get_items
         .or(add_question)
         .or(update_question)
         .or(delete_question)
         .or(add_answer)
+        .or(get_answer)
         .with(cors)
-        .recover(return_error);
+        .recover(handle_errors::return_error);
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 }

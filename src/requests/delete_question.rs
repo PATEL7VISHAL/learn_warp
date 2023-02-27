@@ -1,4 +1,3 @@
-use crate::MyError;
 use crate::_states::{Question, QuestionId, Store};
 use std::collections::HashMap;
 use warp::hyper::StatusCode;
@@ -18,6 +17,6 @@ pub async fn delete_question(
         questions.remove(&id);
         Ok(warp::reply::with_status("Question Deleted", StatusCode::OK))
     } else {
-        Err(warp::reject::custom(MyError::QuestionNotFound))
+        Err(warp::reject::custom(handle_errors::Error::QuestionNotFound))
     }
 }

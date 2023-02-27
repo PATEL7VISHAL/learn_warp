@@ -1,7 +1,4 @@
-use crate::{
-    MyError,
-    _states::{Question, Store},
-};
+use crate::_states::{Question, Store};
 use std::collections::HashMap;
 use warp::hyper::StatusCode;
 
@@ -20,5 +17,7 @@ pub async fn add_question(
         ));
     }
 
-    return Err(warp::reject::custom(MyError::QustionAlreadyExist));
+    return Err(warp::reject::custom(
+        handle_errors::Error::QustionAlreadyExist,
+    ));
 }
