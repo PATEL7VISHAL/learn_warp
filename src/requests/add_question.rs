@@ -17,7 +17,7 @@ pub async fn add_question(
         ));
     }
 
-    return Err(warp::reject::custom(
+    Err(warp::reject::custom(
         handle_errors::Error::QustionAlreadyExist,
-    ));
+    ))
 }

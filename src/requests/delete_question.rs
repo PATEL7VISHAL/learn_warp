@@ -13,7 +13,7 @@ pub async fn delete_question(
     // if let Some(_) = store.questions.read().await.get(&id) { b
     // store.questions.write().await.remove(&id);
 
-    if let Some(_) = questions.get(&id) {
+    if questions.get(&id).is_some(){
         questions.remove(&id);
         Ok(warp::reply::with_status("Question Deleted", StatusCode::OK))
     } else {

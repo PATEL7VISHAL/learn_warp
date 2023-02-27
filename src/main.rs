@@ -11,7 +11,6 @@ use warp::{
 };
 
 pub mod _states;
-use _states::*;
 
 pub mod requests;
 pub use requests::*;
@@ -23,7 +22,7 @@ impl Reject for InvalidId {}
 
 #[tokio::main]
 async fn main() {
-    let mut store = Store::new();
+    let mut store = _states::Store::new();
     store.init().await;
 
     //NOTE: here the warp:any() mean this store data can goes to any filter (but question any
