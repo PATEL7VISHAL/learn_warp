@@ -1,8 +1,6 @@
-use crate::{
-    _states::{Pagination, Question, Store},
-};
-use std::collections::HashMap;
+use crate::_states::{Pagination, Question, Store};
 use handle_errors::Error;
+use std::collections::HashMap;
 
 // async fn extract_pagination(params: HashMap<String, String>) -> Result<Pagination, Error> {
 fn _extract_pagination(params: HashMap<String, String>) -> Result<Pagination, Error> {
@@ -20,8 +18,10 @@ fn _extract_pagination(params: HashMap<String, String>) -> Result<Pagination, Er
 pub async fn get_questions(
     params: HashMap<String, String>,
     store: Store,
+    request_id: String,
 ) -> Result<impl warp::Reply, warp::Rejection> {
     // let res : Vec<Question> = store.questions.values().collect();
+    log::info!("request_id: {}", request_id);
 
     let res: Vec<Question> = store
         .questions

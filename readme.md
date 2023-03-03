@@ -1,14 +1,15 @@
 Warp use the Reply trait to response of the request 
 - This on fn request is require to impl if we want to derive the from request
-    ```rust
-    fn into_response(self) -> warp::reply::Response {
-        Response::new(format!("message: {}", self.msg).into())
-        // Here we can see it's creating the response instance
-        // when may be we want send the response
-        // means ever type which impl the Reply trait can convortable 
-        // into the Response.
-    }
-    ```
+
+```rust
+fn into_response(self) -> warp::reply::Response {
+    Response::new(format!("message: {}", self.msg).into())
+    // Here we can see it's creating the response instance
+    // when may be we want send the response
+    // means ever type which impl the Reply trait can convortable 
+    // into the Response.
+}
+```
 
 - after the route path we can add the function `.recover(function)` which help 
 use to handle errors (ouccar in above routes).
@@ -39,15 +40,15 @@ allow. it's throw and error in `Forbidden` return type.
 - A RESTful API is usually a way to GET, UPDATE, CREATE, and DELETE data through 
 HTTP endpoints, which are grouped by resources.
 
-    ```rust 
-        let store_filter = warp::any().map(move || store.clone());
+```rust 
+    let store_filter = warp::any().map(move || store.clone());
 
-        let get_items = warp::get()
-            .and(warp::path("questions"))
-            .and(warp::path::end())
-            .and(warp::query())
-            .and(store_filter) 
-    ```
+    let get_items = warp::get()
+        .and(warp::path("questions"))
+        .and(warp::path::end())
+        .and(warp::query())
+        .and(store_filter) 
+```
     
 - from this snippits we can create the store/database which can assess over 
 our every filters.
@@ -64,6 +65,27 @@ take one more field for store varible.
         + warp::reject::Reject
 
 --- 
+#### LOGING:
+- There are multiple lever of logging
+    - info
+    - warn
+    - error
+    - dubug
+- for loging we use some external crate like `log` and `env_logger`.
+- `env_logger` helps to define the log level which only log, which is define by the 
+environment varible `RUST_LOG`.
+- we can also apply filter on warp like the `CORS` and sending data to each filters,
+by creating varible from `warp::log::custom(log< |Info|->() >)` and add to rutes by 
+`.with` function to the routes.
+
+- There is one more library called 'log4rs' which is also use for loging, but log4rs
+contains some extra functionality like to configure by the config file (`_.yaml`)
+and can also update config without restarting the server.
+- we can save the logs to external file and also manage output format to json too.
+
+
+
+--- 
 #### ETC
 - Different betwenn Mutext and RwLock
     + ___Mutext___ -> for either a writer or reader
@@ -75,22 +97,22 @@ environment`.
 
 - There are two format to send data from Client side to the server
     + __JSON__
-    + __DATA-URLENCODE__ => like the key and values assign by `=` and multiple value saperated by the `&` sign.
+    + __DATA-URLENCODE__ => like the key and values assign by `=` and multiple value 
+    saperated by the `&` sign.
 
-- Rust library project contains `lib.rs` which provide a public interface to an underlying functionality.
-
-
-
-
+- Rust library project contains `lib.rs` which provide a public interface to an underlying 
+functionality.
 
 --- 
 ### Requests:
 - GET_QUESTIONS
+
 ```console 
 curl --location --request GET 'localhost:3030/questions'
 ```
 
 - ADD_QUSTION
+
 ```console
 curl --location --request POST 'localhost:3030/questions' \
     --header 'Content-Type: application/json' \
@@ -102,6 +124,7 @@ curl --location --request POST 'localhost:3030/questions' \
 ```
 
 - UPDATE_QUESTION
+
 ```console
 curl --location --request PUT 'localhost:3030/questions/2' \
     --header 'Content-Type: application/json' \
@@ -114,11 +137,13 @@ curl --location --request PUT 'localhost:3030/questions/2' \
 
 
 - DELETE_QUSTION
+
 ```console
 curl --location --request DELETE 'localhost:3030/questions/1'
 ```
 
 - Add answer
+
 ```console
 curl --location --request POST 'localhost:3030/questions/1/answers' \
     --header 'Content-type: application/x-www-form-urlencoded' \
@@ -127,6 +152,7 @@ curl --location --request POST 'localhost:3030/questions/1/answers' \
 ```
 
 - Get answers
+
 ```console
 curl --location --request GET 'localhost:3030/questions/2/answers'
 ```

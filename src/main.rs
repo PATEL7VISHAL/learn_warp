@@ -11,6 +11,8 @@ use warp::{
 };
 
 pub mod _states;
+pub mod utils;
+use utils::ToString;
 
 pub mod requests;
 pub use requests::*;
@@ -22,6 +24,15 @@ impl Reject for InvalidId {}
 
 #[tokio::main]
 async fn main() {
+    env_logger::init();
+
+    log::error!("this is an error");
+    log::info!("this is a info");
+    log::warn!("this is a warning");
+    let log = warp::log::custom(|info| {
+        eprintln!("{}", info.to_string());
+    });
+
     let mut store = _states::Store::new();
     store.init().await;
 
@@ -29,6 +40,9 @@ async fn main() {
     //filter which are defined or any filter send which we got for the request) may be any filter
     //which we are created.
     let store_filter = warp::any().map(move || store.clone());
+
+    //creating the route which genrated uniqueid
+    let id_filter = warp::any().map(|| uuid::Uuid::new_v4().to_string());
 
     let cors = warp::cors()
         .allow_any_origin()
@@ -41,6 +55,7 @@ async fn main() {
         .and(warp::path::end())
         .and(warp::query()) //NOTE: that the order or add.
         .and(store_filter.clone())
+        .and(id_filter)
         .and_then(get_questions::get_questions);
     // .recover(return_error); //NOTE: if any error oucar in above routes then it's called in we
 
@@ -83,6 +98,7 @@ async fn main() {
         .and(warp::path("answers"))
         .and(warp::path::end())
         .and(store_filter.clone())
+        // .and(id_filter)
         .and_then(get_answer::get_answer);
 
     //BUG: add_answer and get_answer fliter has some bugs
@@ -97,6 +113,7 @@ async fn main() {
         .or(add_answer)
         .or(get_answer)
         .with(cors)
+        .with(log)
         .recover(handle_errors::return_error);
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
