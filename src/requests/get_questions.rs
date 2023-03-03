@@ -20,8 +20,6 @@ pub async fn get_questions(
     store: Store,
     request_id: String,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    // let res : Vec<Question> = store.questions.values().collect();
-    log::info!("request_id: {}", request_id);
 
     let res: Vec<Question> = store
         .questions

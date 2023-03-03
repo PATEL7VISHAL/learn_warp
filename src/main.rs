@@ -24,15 +24,6 @@ impl Reject for InvalidId {}
 
 #[tokio::main]
 async fn main() {
-    env_logger::init();
-
-    log::error!("this is an error");
-    log::info!("this is a info");
-    log::warn!("this is a warning");
-    let log = warp::log::custom(|info| {
-        eprintln!("{}", info.to_string());
-    });
-
     let mut store = _states::Store::new();
     store.init().await;
 
@@ -113,7 +104,6 @@ async fn main() {
         .or(add_answer)
         .or(get_answer)
         .with(cors)
-        .with(log)
         .recover(handle_errors::return_error);
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
