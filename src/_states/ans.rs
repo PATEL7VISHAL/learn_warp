@@ -2,7 +2,7 @@ use super::QuestionId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
-pub struct AnswerId(String);
+pub struct AnswerId(pub i32);
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Answer {
@@ -12,7 +12,7 @@ pub struct Answer {
 }
 
 impl Answer {
-    pub fn new(id: String, content: String, question_id: String) -> Self {
+    pub fn new(id: i32, content: String, question_id: i32) -> Self {
         Self {
             id: AnswerId(id),
             content,

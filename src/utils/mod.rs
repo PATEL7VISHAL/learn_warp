@@ -1,3 +1,7 @@
+pub mod macros;
+pub mod try_froms;
+
+
 // use std::fmt::Display;
 use warp::log::Info;
 

@@ -1,6 +1,6 @@
 {
     "1": {
-        "id": "1",
+        "id": 1,
         "title": "How?",
         "content": "Please help!",
         "tags": [
@@ -8,7 +8,7 @@
         ]
     },
     "2": {
-        "id": "2",
+        "id": 2,
         "title": "What?",
         "content": "tech change!",
         "tags": [

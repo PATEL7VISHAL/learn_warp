@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 pub use std::io::{Error, ErrorKind};
 pub use std::str::FromStr;
+use surrealdb::sql::Value;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Question {
@@ -11,7 +12,7 @@ pub struct Question {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Hash, PartialEq, Eq)]
-pub struct QuestionId(pub String);
+pub struct QuestionId(pub i32);
 
 impl Question {
     pub fn new(id: QuestionId, title: String, content: String, tags: Option<Vec<String>>) -> Self {
@@ -29,8 +30,15 @@ impl FromStr for QuestionId {
 
     fn from_str(id: &str) -> Result<Self, Self::Err> {
         match id.is_empty() {
-            false => Ok(QuestionId(id.to_owned())),
+            false => Ok(QuestionId(id.parse().unwrap())),
             true => Err(Error::new(ErrorKind::InvalidInput, "No id provider")),
         }
+    }
+}
+
+//PF: note here is idk about the Into trait so corrently use the direct methdo
+impl QuestionId {
+    pub fn into(self) -> Value {
+        self.0.into()
     }
 }

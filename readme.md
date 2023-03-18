@@ -84,6 +84,17 @@ and can also update config without restarting the server.
 - we can save the logs to external file and also manage output format to json too.
 
 
+---
+#### Database
+- `ORM` which statnds for `object-relational mapping` from this create can create 
+structure/object which can intract with our database.
+- we can also use the `SQL` to intract with database.
+- `SQLx` is a crate to intract with our database.
+- There are some advanteages of `SQLx`:
+    - it's asynchronous.
+    - it can support multiple database (MySQL, PostgresSQL, SQLite)
+    - also work on multiple runtimes (Tokio, async-std, Actix Web)
+    - and widely use in community
 
 --- 
 #### ETC
