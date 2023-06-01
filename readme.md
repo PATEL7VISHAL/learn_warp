@@ -167,5 +167,3 @@ curl --location --request POST 'localhost:3030/questions/1/answers' \
 ```console
 curl --location --request GET 'localhost:3030/questions/2/answers'
 ```
-
-
